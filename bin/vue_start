@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker-compose exec --user www-data:www-data frontend sh -c "cd spa/ && npm run serve"
