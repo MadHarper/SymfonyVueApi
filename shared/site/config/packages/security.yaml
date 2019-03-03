@@ -1,13 +1,27 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: uuid
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            anonymous: ~
+            logout: ~
+
+            guard:
+                authenticators:
+#                    - App\Security\LoginFormAuthenticator
+                    - App\Security\ApiAuthenticator
+
+#                entry_point: App\Security\LoginFormAuthenticator
+
+            switch_user: true
 
             # activate different ways to authenticate
 
@@ -20,5 +34,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/api, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }

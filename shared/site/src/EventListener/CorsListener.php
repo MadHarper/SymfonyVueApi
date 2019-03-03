@@ -23,15 +23,15 @@ class CorsListener
         }
         $request = $event->getRequest();
         if ($request->getRealMethod() === 'OPTIONS') {
-//            $response = new Response();
-//
-//            $response->headers->set('Access-Control-Allow-Credentials', 'true');
-//            $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, PATCH, OPTIONS');
-//            $response->headers->set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Device-Code');
-//            $response->headers->set('Access-Control-Max-Age', 3600);
-//
-//            $response->setStatusCode(204);
-//            $event->setResponse($response);
+            $response = new Response();
+
+            $response->headers->set('Access-Control-Allow-Credentials', 'true');
+            $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, PATCH, OPTIONS');
+            $response->headers->set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Device-Code, X-AUTH-TOKEN');
+            $response->headers->set('Access-Control-Max-Age', 3600);
+
+            $response->setStatusCode(204);
+            $event->setResponse($response);
         }
     }
 
@@ -43,7 +43,7 @@ class CorsListener
         // Run CORS check in here to ensure domain is in the system
         if (in_array($request->headers->get('origin'), $this->cors)) {
             $response->headers->set('Access-Control-Allow-Credentials', 'true');
-            $response->headers->set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Device-Code');
+            $response->headers->set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Device-Code, X-AUTH-TOKEN');
             $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, PATCH, OPTIONS');
             $response->headers->set('Vary', 'Origin');
         }

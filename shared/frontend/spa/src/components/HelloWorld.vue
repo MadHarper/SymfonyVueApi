@@ -12,8 +12,10 @@
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
     </ul>
     <h3>Essential Links</h3>
+    <div class="alert alert-primary" role="alert">
+      A simple primary alert—check it out!
+    </div>
     <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
       <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
       <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
       <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
@@ -21,33 +23,64 @@
     </ul>
     <h3>Ecosystem</h3>
     <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
+      <li v-for="item in items" :key="item.id" :id="item.id" @click="clickItem(`${item.id}`)">
+        <a href="#">{{ item.name }}</a>
+        <p>Birth day: {{ convertBD(item.bithday) }}</p>
+      </li>
     </ul>
+
+    <select v-model="selected">
+      <option disabled value="">Выберите один из вариантов</option>
+      <option>А</option>
+      <option>Б</option>
+      <option>В</option>
+    </select>
+    <span>Выбрано: {{ selected }}</span>
   </div>
+
 </template>
 
 <script>
-import axios from 'axios';
+//import axios from 'axios';
+// используем предварительно настроенный axios
+//import {HTTP} from '../helpers/http'
 
 export default {
   name: 'HelloWorld',
   props: {
+    propA: Number,
     msg: String
   },
   data() {
       return {
-          status: null
+          status: null,
+          someId: 36,
+          items: [
+              {id: 5, name: "John", bithday: 100},
+              {id: 12, name: "Mary", bithday: 300},
+              {id: 28, name: "Sancho", bithday: 500},
+              {id: 3, name: "Marcus", bithday: 400}
+          ],
+          selected: null
       };
   },
-  mounted() {
-      axios
-          .get('http://cast.dev:8047/api/spa')
+  mounted(){
+          this.init();
+  },
+  methods: {
+      init() {
+          this.$axios.get('spa')
           //.then(res => console.log(res));
-          .then(res => (this.status = res.data.status));
+          .then(res => (this.status = res.data.status))
+          .catch(err => console.log("Поймал ошибку", err))
+
+      },
+      clickItem(id) {
+          console.log("Click Item id - ", id);
+      },
+      convertBD(date) {
+          return date + 1;
+      }
   }
 }
 </script>

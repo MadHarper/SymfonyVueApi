@@ -32,9 +32,8 @@ ARG GUID
 #RUN adduser -u $UID -D -g '' -G www-data www-data
 
 RUN set -x \
-	&& addgroup -g 1003 www-data \
-	&& adduser -u 1003 -D -S -G www-data www-data
-
+	&& addgroup -g $GUID www-data \
+	&& adduser -u $UID -D -S -G www-data www-data
 
 
 #RUN set -x \

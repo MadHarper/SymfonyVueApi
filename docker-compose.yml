@@ -36,7 +36,7 @@ services:
     expose:
       - "5432"
     ports:
-      - 7138:5432
+      - 7139:5432
     volumes:
       - "./shared/postgresql/data:/var/lib/postgresql/data/pgdata"
     environment:

@@ -1,17 +1,37 @@
 <template>
   <div id="app">
+    <div id="nav">
+      <router-link to="/">Home</router-link>
+      <span> | </span>
+      <router-link to="/users">Users</router-link>
+    </div>
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view/>
+
+
+    <!--
+      <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <Users />
+      <Table />
+    -->
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+//import HelloWorld from './components/HelloWorld.vue'
+//import Table from './components/Table.vue'
+//import Users from './components/users/Users.vue'
 
 export default {
   name: 'app',
+  mounted() {
+    window.console.log("mounted App component");
+  },
   components: {
-    HelloWorld
+//    HelloWorld,
+//    Users,
+//    Table
   }
 }
 </script>
